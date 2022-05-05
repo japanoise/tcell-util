@@ -78,7 +78,7 @@ func EditDynamicWithCallback(screen tcell.Screen, defval, prompt string, refresh
 			cursor++
 		}
 		t, _ := trimString(buffer, offset)
-		PrintString(screen, prompt+": "+t, 0, y-1)
+		PrintString(screen, 0, y-1, prompt+": "+t)
 		screen.ShowCursor(iw+cursor, y-1)
 		screen.Show()
 		ev := screen.PollEvent()
@@ -264,7 +264,7 @@ func ChoiceIndexCallback(screen tcell.Screen, title string, choices []string, de
 		sx, sy := screen.Size()
 		screen.HideCursor()
 		screen.Clear()
-		PrintString(screen, title, 0, 0)
+		PrintString(screen, 0, 0, title)
 		for selection < offset {
 			offset -= 5
 			if offset < 0 {
@@ -279,12 +279,12 @@ func ChoiceIndexCallback(screen tcell.Screen, title string, choices []string, de
 		}
 		for i, s := range choices[offset:] {
 			ts, _ := trimString(s, cx)
-			PrintString(screen, ts, 3, i+1)
+			PrintString(screen, 3, i+1, ts)
 			if cx > 0 {
-				PrintString(screen, "←", 2, i+1)
+				PrintString(screen, 2, i+1, "←")
 			}
 		}
-		PrintString(screen, ">", 1, (selection+1)-offset)
+		PrintString(screen, 1, (selection+1)-offset, ">")
 		if f != nil {
 			f(screen, selection, sx, sy)
 		}
@@ -368,7 +368,7 @@ func PressKey(screen tcell.Screen, p string, refresh func(tcell.Screen, int, int
 		refresh(screen, x, y)
 	}
 	ClearLine(screen, x, y-1)
-	PrintString(screen, pm, 0, y-1)
+	PrintString(screen, 0, y-1, pm)
 	screen.ShowCursor(plen, y-1)
 	screen.Show()
 	for {
@@ -380,7 +380,7 @@ func PressKey(screen tcell.Screen, p string, refresh func(tcell.Screen, int, int
 				refresh(screen, x, y)
 			}
 			ClearLine(screen, x, y-1)
-			PrintString(screen, pm, 0, y-1)
+			PrintString(screen, 0, y-1, pm)
 			screen.ShowCursor(plen, y-1)
 			screen.Show()
 		case *tcell.EventKey:
@@ -416,12 +416,12 @@ func PickColor(screen tcell.Screen, prompt string) tcell.Color {
 		sx, sy := screen.Size()
 		pillWidth := sx / 16
 		screen.Clear()
-		PrintString(screen, prompt, 0, 0)
+		PrintString(screen, 0, 0, prompt)
 		if sy < 16 {
-			PrintString(screen, "Warning: Screen too short", sx-26, 0)
+			PrintString(screen, sx-26, 0, "Warning: Screen too short")
 		}
 		if sx < 16 {
-			PrintString(screen, "Warning: Screen too narrow", sx-27, 0)
+			PrintString(screen, sx-27, 0, "Warning: Screen too narrow")
 		}
 		for i := 0; i < 256; i++ {
 			for j := 0; j < pillWidth; j++ {

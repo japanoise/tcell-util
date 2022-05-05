@@ -72,7 +72,7 @@ func PrintRuneStyle(screen tcell.Screen, x, y int, ru rune, style tcell.Style) {
 
 //Prints the string given on the screen. Uses the above functions to choose how it
 //appears.
-func PrintString(screen tcell.Screen, s string, x, y int) {
+func PrintString(screen tcell.Screen, x, y int, s string) {
 	PrintStringStyle(screen, x, y, s, tcell.StyleDefault)
 }
 
@@ -86,7 +86,7 @@ func PrintStringStyle(screen tcell.Screen, x, y int, s string, style tcell.Style
 }
 
 func pauseForAnyKey(screen tcell.Screen, currentRow int) {
-	PrintString(screen, "<More>", 0, currentRow)
+	PrintString(screen, 0, currentRow, "<More>")
 	screen.Show()
 	ev := screen.PollEvent()
 Loop:
@@ -113,7 +113,7 @@ func lessDrawRows(screen tcell.Screen, sx, sy, cx, cy int, rows []lessRow, numro
 		if ri >= 0 && ri < numrows {
 			if cx < len(rows[ri].data) {
 				ts, _ := trimString(rows[ri].data, cx)
-				PrintString(screen, ts, 0, i)
+				PrintString(screen, 0, i, ts)
 			}
 		}
 	}
