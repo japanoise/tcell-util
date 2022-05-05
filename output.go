@@ -76,11 +76,6 @@ func Printstring(screen tcell.Screen, s string, x, y int) {
 	PrintStringStyle(screen, x, y, s, tcell.StyleDefault)
 }
 
-//Same as Printstring, but passes a color to PrintRune.
-func PrintstringColored(screen tcell.Screen, style tcell.Style, s string, x, y int) {
-	PrintStringStyle(screen, x, y, s, style)
-}
-
 //Print string with a style
 func PrintStringStyle(screen tcell.Screen, x, y int, s string, style tcell.Style) {
 	i := 0
