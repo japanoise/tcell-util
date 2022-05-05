@@ -78,7 +78,7 @@ func EditDynamicWithCallback(screen tcell.Screen, defval, prompt string, refresh
 			cursor++
 		}
 		t, _ := trimString(buffer, offset)
-		Printstring(screen, prompt+": "+t, 0, y-1)
+		PrintString(screen, prompt+": "+t, 0, y-1)
 		screen.ShowCursor(iw+cursor, y-1)
 		screen.Show()
 		ev := screen.PollEvent()
@@ -264,7 +264,7 @@ func ChoiceIndexCallback(screen tcell.Screen, title string, choices []string, de
 		sx, sy := screen.Size()
 		screen.HideCursor()
 		screen.Clear()
-		Printstring(screen, title, 0, 0)
+		PrintString(screen, title, 0, 0)
 		for selection < offset {
 			offset -= 5
 			if offset < 0 {
@@ -279,12 +279,12 @@ func ChoiceIndexCallback(screen tcell.Screen, title string, choices []string, de
 		}
 		for i, s := range choices[offset:] {
 			ts, _ := trimString(s, cx)
-			Printstring(screen, ts, 3, i+1)
+			PrintString(screen, ts, 3, i+1)
 			if cx > 0 {
-				Printstring(screen, "←", 2, i+1)
+				PrintString(screen, "←", 2, i+1)
 			}
 		}
-		Printstring(screen, ">", 1, (selection+1)-offset)
+		PrintString(screen, ">", 1, (selection+1)-offset)
 		if f != nil {
 			f(screen, selection, sx, sy)
 		}
@@ -368,7 +368,7 @@ func PressKey(screen tcell.Screen, p string, refresh func(tcell.Screen, int, int
 		refresh(screen, x, y)
 	}
 	ClearLine(screen, x, y-1)
-	Printstring(screen, pm, 0, y-1)
+	PrintString(screen, pm, 0, y-1)
 	screen.ShowCursor(plen, y-1)
 	screen.Show()
 	for {
@@ -380,7 +380,7 @@ func PressKey(screen tcell.Screen, p string, refresh func(tcell.Screen, int, int
 				refresh(screen, x, y)
 			}
 			ClearLine(screen, x, y-1)
-			Printstring(screen, pm, 0, y-1)
+			PrintString(screen, pm, 0, y-1)
 			screen.ShowCursor(plen, y-1)
 			screen.Show()
 		case *tcell.EventKey:
