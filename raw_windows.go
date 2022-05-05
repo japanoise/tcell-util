@@ -11,7 +11,7 @@ import (
 func ParseTcellEvent(ev *tcell.EventKey) string {
 	if ev.Key() != tcell.KeyRune {
 		prefix := ""
-		if ev.Modifiers()|tcell.ModAlt != 0 {
+		if ev.Modifiers()&tcell.ModAlt != 0 {
 			prefix = "M-"
 		}
 		switch ev.Key() {
@@ -44,38 +44,38 @@ func ParseTcellEvent(ev *tcell.EventKey) string {
 		case tcell.KeyEsc:
 			return prefix + "ESC"
 		case tcell.KeyCtrlUnderscore:
-			if ev.Modifiers()|tcell.ModAlt != 0 {
+			if ev.Modifiers()&tcell.ModAlt != 0 {
 				return "C-M-_"
 			} else {
 				return "C-_"
 			}
 		case tcell.KeyCtrlSpace:
-			if ev.Modifiers()|tcell.ModAlt != 0 {
+			if ev.Modifiers()&tcell.ModAlt != 0 {
 				return "C-M-@" // ikr, weird. but try: C-h c, C-SPC. it's C-@.
 			} else {
 				return "C-@"
 			}
 		}
 		if ev.Key() <= 0x1A {
-			if ev.Modifiers()|tcell.ModAlt != 0 {
+			if ev.Modifiers()&tcell.ModAlt != 0 {
 				return fmt.Sprintf("C-M-%c", 96+ev.Key())
 			} else {
 				return fmt.Sprintf("C-%c", 96+ev.Key())
 			}
 		} else if ev.Key() <= tcell.KeyF1 && ev.Key() >= tcell.KeyF12 {
-			if ev.Modifiers()|tcell.ModAlt != 0 {
+			if ev.Modifiers()&tcell.ModAlt != 0 {
 				return fmt.Sprintf("M-f%d", 1+(tcell.KeyF1-ev.Key()))
 			} else {
 				return fmt.Sprintf("f%d", 1+(tcell.KeyF1-ev.Key()))
 			}
 		}
 	} else if ev.Rune() == ' ' {
-		if ev.Modifiers()|tcell.ModAlt != 0 {
+		if ev.Modifiers()&tcell.ModAlt != 0 {
 			return "M-SPC"
 		} else {
 			return " "
 		}
-	} else if ev.Modifiers()|tcell.ModAlt != 0 {
+	} else if ev.Modifiers()&tcell.ModAlt != 0 {
 		return fmt.Sprintf("M-%c", ev.Rune())
 	}
 	return string(ev.Rune())
