@@ -72,7 +72,7 @@ func PrintRuneStyle(screen tcell.Screen, x, y int, ru rune, style tcell.Style) {
 
 //Prints the string given on the screen. Uses the above functions to choose how it
 //appears.
-func Printstring(screen tcell.Screen, s string, x, y int) {
+func PrintString(screen tcell.Screen, s string, x, y int) {
 	PrintStringStyle(screen, x, y, s, tcell.StyleDefault)
 }
 
@@ -86,7 +86,7 @@ func PrintStringStyle(screen tcell.Screen, x, y int, s string, style tcell.Style
 }
 
 func pauseForAnyKey(screen tcell.Screen, currentRow int) {
-	Printstring(screen, "<More>", 0, currentRow)
+	PrintString(screen, "<More>", 0, currentRow)
 	screen.Show()
 	ev := screen.PollEvent()
 Loop:
@@ -113,14 +113,14 @@ func lessDrawRows(screen tcell.Screen, sx, sy, cx, cy int, rows []lessRow, numro
 		if ri >= 0 && ri < numrows {
 			if cx < len(rows[ri].data) {
 				ts, _ := trimString(rows[ri].data, cx)
-				Printstring(screen, ts, 0, i)
+				PrintString(screen, ts, 0, i)
 			}
 		}
 	}
 	for i := 0; i < sx; i++ {
 		PrintRuneStyle(screen, i, sy-1, ' ', tcell.StyleDefault.Reverse(true))
 	}
-	PrintstringColored(screen, tcell.StyleDefault.Reverse(true), "^C, ^G, q to quit. Arrow keys/Vi keys/Emacs keys to move.", 0, sy-1)
+	PrintStringStyle(screen, 0, sy-1, "^C, ^G, q to quit. Arrow keys/Vi keys/Emacs keys to move.", tcell.StyleDefault.Reverse(true))
 	screen.Show()
 }
 
