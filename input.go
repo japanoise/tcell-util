@@ -409,3 +409,83 @@ func yesNoChoice(screen tcell.Screen, p string, allowcancel bool, refresh func(t
 	key := PressKey(screen, p, refresh, "y", "n")
 	return key == "y", nil
 }
+
+func PickColor(screen tcell.Screen, prompt string) tcell.Color {
+	idx := 0
+	for {
+		sx, sy := screen.Size()
+		pillWidth := sx / 16
+		screen.Clear()
+		PrintString(screen, prompt, 0, 0)
+		if sy < 16 {
+			PrintString(screen, "Warning: Screen too short", sx-26, 0)
+		}
+		if sx < 16 {
+			PrintString(screen, "Warning: Screen too narrow", sx-27, 0)
+		}
+		for i := 0; i < 256; i++ {
+			for j := 0; j < pillWidth; j++ {
+				if i == idx {
+					screen.SetContent(
+						((i%16)*pillWidth)+j,
+						1+(i/16),
+						'=', nil,
+						tcell.StyleDefault.Foreground(
+							tcell.ColorBlack+tcell.Color(i)))
+				} else {
+					screen.SetContent(
+						((i%16)*pillWidth)+j,
+						1+(i/16),
+						' ', nil,
+						tcell.StyleDefault.Background(
+							tcell.ColorBlack+tcell.Color(i)))
+				}
+			}
+		}
+		screen.ShowCursor((idx%16)*pillWidth, 1+(idx/16))
+		screen.Show()
+
+		ev := screen.PollEvent()
+		switch ev := ev.(type) {
+		case *tcell.EventKey:
+			key := ParseTcellEvent(ev)
+			switch key {
+			case "M-<":
+				idx = 0
+			case "M->":
+				idx = 255
+			case "UP", "C-p":
+				idx -= 16
+			case "DOWN", "C-n":
+				idx += 16
+			case "M-UP", "M-p":
+				idx -= 64
+			case "M-DOWN", "M-n":
+				idx += 64
+			case "M-LEFT", "M-b":
+				idx -= 4
+			case "M-RIGHT", "M-f":
+				idx += 4
+			case "LEFT", "C-b":
+				idx--
+			case "RIGHT", "C-f":
+				idx++
+			case "HOME", "C-a":
+				for idx%16 != 0 {
+					idx--
+				}
+			case "END", "C-e":
+				for idx%16 != 15 {
+					idx++
+				}
+			case "RET":
+				return tcell.ColorBlack + tcell.Color(idx)
+			}
+			if idx < 0 {
+				idx = 0
+			} else if idx > 255 {
+				idx = 255
+			}
+		}
+	}
+}

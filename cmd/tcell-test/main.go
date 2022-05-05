@@ -26,14 +26,17 @@ func main() {
 
 	defer s.Fini()
 
+	color := tcell.ColorDefault
 	testPrompt := "Prompting"
 	testScroll := "Scrolling through text"
 	testKey := "Prompting for characters"
+	testColor := "Selecting colors"
 	quit := "Quit"
 	choices := []string{
 		testPrompt,
 		testScroll,
 		testKey,
+		testColor,
 		quit,
 	}
 	text := []string{
@@ -68,9 +71,11 @@ func main() {
 		idx := termutil.ChoiceIndexCallback(
 			s, "What do you want to test?", choices, 0,
 			func(screen tcell.Screen, sel, x, y int) {
-				termutil.PrintString(
-					screen, fmt.Sprintf("Choice %v", sel),
-					x-10, y-rand.Intn(10)-2)
+				termutil.PrintStringStyle(
+					screen,
+					x-10, y-rand.Intn(10)-2,
+					fmt.Sprintf("Choice %v", sel),
+					tcell.StyleDefault.Foreground(color))
 			})
 		if idx < 0 {
 			continue
@@ -120,6 +125,8 @@ func main() {
 							))
 					})
 			}
+		case testColor:
+			color = termutil.PickColor(s, "Pick a color!")
 		case quit:
 			return
 		}
