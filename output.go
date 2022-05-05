@@ -52,8 +52,8 @@ func RunewidthStr(s string) int {
 
 //Prints the rune given on the screen. Uses reverse colors for control
 //characters.
-func PrintRune(screen tcell.Screen, x, y int, ru rune, style tcell.Style) {
-	PrintRuneStyle(screen, x, y, ru, style)
+func PrintRune(screen tcell.Screen, x, y int, ru rune) {
+	PrintRuneStyle(screen, x, y, ru, tcell.StyleDefault)
 }
 
 //Print the rune with reverse colors for control characters
@@ -123,7 +123,7 @@ func lessDrawRows(screen tcell.Screen, sx, sy, cx, cy int, rows []lessRow, numro
 		}
 	}
 	for i := 0; i < sx; i++ {
-		PrintRune(screen, i, sy-1, ' ', tcell.StyleDefault.Reverse(true))
+		PrintRuneStyle(screen, i, sy-1, ' ', tcell.StyleDefault.Reverse(true))
 	}
 	PrintstringColored(screen, tcell.StyleDefault.Reverse(true), "^C, ^G, q to quit. Arrow keys/Vi keys/Emacs keys to move.", 0, sy-1)
 	screen.Show()
