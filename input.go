@@ -6,7 +6,7 @@ import (
 	"errors"
 	"unicode/utf8"
 
-	"github.com/gdamore/tcell"
+	"github.com/gdamore/tcell/v2"
 )
 
 //Get a string from the user. They can use typical emacs-ish editing commands,

@@ -6,7 +6,7 @@ package termutil
 import (
 	"fmt"
 
-	"github.com/gdamore/tcell"
+	"github.com/gdamore/tcell/v2"
 )
 
 //Parses a tcell.EventKey event and returns it as an emacs-ish keybinding string

@@ -5,7 +5,7 @@ import (
 	"log"
 	"math/rand"
 
-	"github.com/gdamore/tcell"
+	"github.com/gdamore/tcell/v2"
 	termutil "github.com/japanoise/tcell-util"
 )
 

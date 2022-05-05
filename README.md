@@ -2,8 +2,8 @@
 
 [![GoDoc](https://pkg.go.dev/github.com/japanoise/tcell-util?status.svg)](https://pkg.go.dev/github.com/japanoise/tcell-util)
 
-This is a simple utility library for tcell. It's designed to be a more-or-less
-drop-in replacement of my earlier library
+This is a simple utility library for tcell v2. It's designed to be a
+more-or-less drop-in replacement of my earlier library
 [termbox-util](https://github.com/japanoise/termbox-util) (in fact, the code is
 basically the same, just changing termbox idioms for tcell idioms). It provides
 sensible printing functions, input functions that take care of their own event
@@ -16,9 +16,18 @@ well as termbox alongside tcell; please don't do this), import it like this:
 
 ```go
 import (
+    "github.com/gdamore/tcell/v2"
     tcell-util "github.com/japanoise/tcell-util"
 )
 ```
+
+## Will you do a version for tcell v1?
+
+Well, no. But this isn't a complicated library, so it's not likely to use too
+many v2-isms. You could easily revert the commit where I added v2 support, or
+just do something like:
+
+    sed -i -e 's|github.com/gdamore/tcell/v2|github.com/gdamore/tcell|g' *.go
 
 ## Can I trust it?
 
