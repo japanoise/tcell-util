@@ -22,6 +22,8 @@ func ParseTcellEvent(ev *tcell.EventKey) string {
 			return prefix + "DEL"
 		case tcell.KeyTab:
 			return prefix + "TAB"
+		case tcell.KeyBacktab:
+			return prefix + "BACKTAB"
 		case tcell.KeyEnter:
 			return prefix + "RET"
 		case tcell.KeyDown:
