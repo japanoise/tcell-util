@@ -209,7 +209,9 @@ func EditDynamicWithCallback(screen tcell.Screen, defval, prompt string, refresh
 				result := callback(buffer, key)
 				if result != buffer {
 					offset = 0
-					buffer, buflen, bufpos, cursor = recalcBuffer(result)
+					buffer, buflen, _, _ = recalcBuffer(result)
+					bufpos = buflen
+					cursor = RunewidthStr(buffer)
 				}
 			}
 		}
